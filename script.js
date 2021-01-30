@@ -10,6 +10,9 @@ const fMinus = document.getElementById("f-minusIcon");
 const ePlus = document.getElementById("e-plusIcon");
 const eMinus = document.getElementById("e-minusIcon");
 
+const fPerTicketCost = document.getElementById("f-perTicketCost");
+const ePerTicketCost = document.getElementById("e-perTicketCost");
+
 const subtotal = document.getElementById("subtotal");
 const vat = document.getElementById("vat");
 const total = document.getElementById("total");
@@ -17,31 +20,51 @@ const total = document.getElementById("total");
 const bookingButton = document.getElementById("booking-btn");
 
 // functions for event listeners:
-function increment(ticketId, subtotalId, vatId, totalId) {
-  console.log("Increment clicked");
+function increment(ticketId, perTicketCostId) {
+  const ticketAmount = Number(ticketId.value);
+  const perTicketCost = Number(perTicketCostId.innerText);
+  const subtotalAmount = Number(subtotal.innerText) + perTicketCost;
+  const vatAmount = subtotalAmount * (10 / 100);
+  const totalAmount = subtotalAmount + vatAmount;
+
+  ticketId.value = ticketAmount + 1;
+  subtotal.innerText = subtotalAmount;
+  vat.innerText = vatAmount;
+  total.innerText = totalAmount;
 }
 
-function decrement(ticketId, subtotalId, vatId, totalId) {
-  console.log("Decrement clicked");
+function decrement(ticketId, perTicketCostId) {
+  const ticketAmount = Number(ticketId.value);
+  const perTicketCost = Number(perTicketCostId.innerText);
+  const subtotalAmount = Number(subtotal.innerText) - perTicketCost;
+  const vatAmount = subtotalAmount * (10 / 100);
+  const totalAmount = subtotalAmount + vatAmount;
+
+  if (ticketAmount > 0) {
+    ticketId.value = ticketAmount - 1;
+    subtotal.innerText = subtotalAmount;
+    vat.innerText = vatAmount;
+    total.innerText = totalAmount;
+  }
 }
 
 function confirmBooking() {}
 
 // Event listeners:
 fPlus.addEventListener("click", () => {
-  increment(fTicket, subtotal, vat, total);
+  increment(fTicket, fPerTicketCost);
 });
 
 fMinus.addEventListener("click", () => {
-  decrement(fTicket, subtotal, vat, total);
+  decrement(fTicket, fPerTicketCost);
 });
 
 ePlus.addEventListener("click", () => {
-  increment(eTicket, subtotal, vat, total);
+  increment(eTicket, ePerTicketCost);
 });
 
 eMinus.addEventListener("click", () => {
-  decrement(eTicket, subtotal, vat, total);
+  decrement(eTicket, ePerTicketCost);
 });
 
 bookingButton.addEventListener("click", () => {});
