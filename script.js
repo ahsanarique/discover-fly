@@ -1,5 +1,4 @@
 // Need to turn the plus and minus into bootstrap buttons
-// Destination and time in confirm booking section
 
 // HTML element Ids:
 const fTicket = document.getElementById("f-ticket");
@@ -19,7 +18,14 @@ const vat = document.getElementById("vat");
 const total = document.getElementById("total");
 
 const bookingButton = document.getElementById("booking-btn");
-const bookingWindow = document.getElementById("booking-confirmation");
+
+const bookingConfirmButton = document.getElementById("booking-confirm-btn");
+const cancelButton = document.getElementById("cancel-btn");
+
+const flyFromValue = document.getElementById("fly-from-value");
+const flyToValue = document.getElementById("fly-to-value");
+const departureValue = document.getElementById("departure-value");
+const returnValue = document.getElementById("return-value");
 
 // functions for event listeners:
 function increment(ticketId, perTicketCostId) {
@@ -51,10 +57,10 @@ function decrement(ticketId, perTicketCostId) {
 }
 
 function confirmBooking() {
-  const flyFrom = document.getElementById("fly-from");
-  const flyTo = document.getElementById("fly-to");
-  const departure = document.getElementById("departure");
-  const returnTime = document.getElementById("return");
+  const flyFromText = document.getElementById("fly-from-text");
+  const flyToText = document.getElementById("fly-to-text");
+  const departureText = document.getElementById("departure-text");
+  const returnText = document.getElementById("return-text");
 
   const fPurchase = document.getElementById("f-purchase");
   const ePurchase = document.getElementById("e-purchase");
@@ -68,6 +74,11 @@ function confirmBooking() {
   priceCharge.innerText = "$ " + subtotal.innerText;
   vatCharge.innerText = "$ " + vat.innerText;
   totalCharge.innerText = "$ " + total.innerText;
+
+  flyFromText.innerText = flyFromValue.value;
+  flyToText.innerText = flyToValue.value;
+  departureText.innerText = departureValue.value;
+  returnText.innerText = returnValue.value;
 }
 
 // Event listeners:
@@ -88,5 +99,24 @@ eMinus.addEventListener("click", () => {
 });
 
 bookingButton.addEventListener("click", () => {
-  confirmBooking();
+  const inputFields = [...document.querySelectorAll("input")];
+
+  // Checking if the input fields are empty
+  for (let i = 0; i < inputFields.length; i++) {
+    if (inputFields[i].value == "") {
+      alert("Please enter all necessary information in the input form");
+      bookingConfirmButton.disabled = true;
+      cancelButton.innerText = "Ok";
+      break;
+    } else {
+      bookingConfirmButton.disabled = false;
+      cancelButton.innerText = "Cancel";
+      confirmBooking();
+      break;
+    }
+  }
+});
+
+bookingConfirmButton.addEventListener("click", () => {
+  window.location.reload();
 });
