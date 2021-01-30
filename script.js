@@ -1,5 +1,5 @@
 // Need to turn the plus and minus into bootstrap buttons
-// Remove Number Spinner
+// Destination and time in confirm booking section
 
 // HTML element Ids:
 const fTicket = document.getElementById("f-ticket");
