@@ -112,7 +112,6 @@ bookingButton.addEventListener("click", () => {
       bookingConfirmButton.disabled = false;
       cancelButton.innerText = "Cancel";
       confirmBooking();
-      break;
     }
   }
 });
